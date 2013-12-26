@@ -20,13 +20,14 @@ libraryDependencies ++= Seq(
 fork := true
 
 
-ProguardKeys.options in Proguard ++= Seq("-dontnote", "-dontwarn", "-ignorewarnings", "-dontobfuscate", "-dontoptimize")
-
-ProguardKeys.options in Proguard += ProguardOptions.keepMain("DumpIndex")
-
-ProguardKeys.options in Proguard += ProguardOptions.keepMain("RemoveDuplicates")
-
-//ProguardKeys.options in Proguard += "-keepclassmembers public class org.apache.lucene.** { *; }"
+ProguardKeys.options in Proguard ++= Seq(
+  "-dontnote", "-dontwarn", "-ignorewarnings", /*"-dontobfuscate",*/ "-dontoptimize",
+  "-keep class org.apache.lucene.** { *; }",
+  "-keepnames class org.apache.lucene.** { *; }",
+  "-printmapping proguard.map",
+  ProguardOptions.keepMain("DumpIndex"),
+  ProguardOptions.keepMain("RemoveDuplicates")
+)
 
 ProguardKeys.merge in Proguard := true
 
